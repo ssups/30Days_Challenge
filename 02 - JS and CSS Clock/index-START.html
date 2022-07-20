@@ -83,9 +83,9 @@
                 let minutes = now.getMinutes();
                 let seconds = now.getSeconds();
 
-                degForHour = defaultDegree + (360/12) * hours;
-                degForMinute = defaultDegree + (360/60) * minutes;
-                degForSecond = defaultDegree + (360/60) * seconds;
+                let degForHour = defaultDegree + (360/12) * hours;
+                let degForMinute = defaultDegree + (360/60) * minutes;
+                let degForSecond = defaultDegree + (360/60) * seconds;
 
                 hour_hand.style.transform = `rotate(${degForHour}deg)`                
                 min_hand.style.transform = `rotate(${degForMinute}deg)`                
