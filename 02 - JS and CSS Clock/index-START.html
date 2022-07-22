@@ -56,47 +56,41 @@
                 position: absolute;
                 right: 50%;
                 top: 50%;
-                transform-origin: 100% ;
+                transform-origin: 100%;
             }
-            .hour-hand{
+            .hour-hand {
                 width: 30%;
             }
-            .min-hand{
+            .min-hand {
                 width: 50%;
             }
-            .second-hand{
+            .second-hand {
                 width: 50%;
                 height: 2px;
             }
-           
         </style>
 
         <script>
             const hour_hand = document.querySelector('.hour-hand');
             const min_hand = document.querySelector('.min-hand');
             const second_hand = document.querySelector('.second-hand');
-            const defaultDegree = 90
+            const defaultDegree = 90;
 
-            setInterval(()=>{
-                let now = new Date()
-                let hours = now.getHours()
+            setInterval(() => {
+                let now = new Date();
+                let hours = now.getHours();
                 let minutes = now.getMinutes();
                 let seconds = now.getSeconds();
+                let miliSec = now.getMilliseconds();
 
-                let degForHour = defaultDegree + (360/12) * hours;
-                let degForMinute = defaultDegree + (360/60) * minutes;
-                let degForSecond = defaultDegree + (360/60) * seconds;
+                let degForHour = defaultDegree + (360 / 12) * hours;
+                let degForMinute = defaultDegree + (360 / 60) * minutes;
+                let degForSecond = defaultDegree + (360 / 60) * seconds + (6 / 1000) * miliSec;
 
-                hour_hand.style.transform = `rotate(${degForHour}deg)`                
-                min_hand.style.transform = `rotate(${degForMinute}deg)`                
-                second_hand.style.transform = `rotate(${degForSecond}deg)`                
-
-            },1000)
-
-
-
-
-
+                hour_hand.style.transform = `rotate(${degForHour}deg)`;
+                min_hand.style.transform = `rotate(${degForMinute}deg)`;
+                second_hand.style.transform = `rotate(${degForSecond}deg)`;
+            }, 1);
 
             // setInterval(() => {
             //     minutes = Math.floor(seconds / 60);
@@ -111,7 +105,6 @@
             //     console.log(minutes + '분');
             // }, 1000);
             // console.log(thisDay)
-            
         </script>
     </body>
 </html>
