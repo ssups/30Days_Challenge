@@ -26,6 +26,7 @@
     .panels {
       min-height: 100vh;
       overflow: hidden;
+      display: flex;
     }
 
     .panel {
@@ -43,6 +44,12 @@
       font-size: 20px;
       background-size: cover;
       background-position: center;
+
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      
     }
 
     .panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
@@ -55,8 +62,9 @@
     .panel > * {
       margin: 0;
       width: 100%;
-      transition: transform 0.5s;
+      transition: transform 1s cubic-bezier(0.61,-0.19, 0.7,-0.11);
     }
+    /* panel 의 자식요소 전부인거같음? */
 
     .panel p {
       text-transform: uppercase;
@@ -69,8 +77,21 @@
       font-size: 4em;
     }
 
+    .panel p:nth-child(1) {
+      transform: translateY(-170px);
+    }
+    .panel p:nth-child(3) {
+      transform: translateY(170px);
+    }
+
     .panel.open {
       font-size: 40px;
+
+      flex-grow: 8;
+    }
+
+    .panel.open p{
+      transform: translateY(0);
     }
 
   </style>
@@ -105,6 +126,44 @@
   </div>
 
   <script>
+    // const panels = document.querySelector('.panels')
+    // const panel = document.querySelector('.panel')
+    const panelsArr = document.querySelectorAll('.panel')
+
+    panelsArr.forEach(items => items.addEventListener('click',(e)=>{
+        let tempClassLi = e.target.classList
+        if(! tempClassLi.contains('open')){
+          tempClassLi.add('open')
+        }
+        else{
+          tempClassLi.remove('open')
+        }
+      })
+    );
+
+    // panels.addEventListener('click',(e)=>{
+    //   let panelNum = e.target.classList[1][5]
+    //   // switch (panelNum) {
+    //   //   case '1':
+    //   //     e.target.style.flexGrow = '9'
+    //   //     break;
+    //   //   case '2':
+    //   //     e.target.style.flexGrow = '9'
+    //   //     break;
+    //   //   case '3':
+          
+    //   //     break;
+    //   //   case '4':
+          
+    //   //     break;
+    //   //   case '5':
+          
+    //   //     break;
+      
+    //   //   default:
+    //   //     break;
+    //   // }
+    // })
 
   </script>
 
