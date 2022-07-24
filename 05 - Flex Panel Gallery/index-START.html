@@ -126,10 +126,8 @@
   </div>
 
   <script>
-    // const panels = document.querySelector('.panels')
-    // const panel = document.querySelector('.panel')
     const panelsArr = document.querySelectorAll('.panel')
-
+    
     panelsArr.forEach(items => items.addEventListener('click',(e)=>{
         let tempClassLi = e.target.classList
         if(! tempClassLi.contains('open')){
@@ -139,7 +137,10 @@
           tempClassLi.remove('open')
         }
       })
-    );
+      );
+      
+    // const panels = document.querySelector('.panels')
+    // const panel = document.querySelector('.panel')
 
     // panels.addEventListener('click',(e)=>{
     //   let panelNum = e.target.classList[1][5]
