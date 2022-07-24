@@ -145,13 +145,25 @@
 
             let arr = {}
             arr['car'] = 1 // 'car' -> key, 1 -> value
-            console.log(arr)
-            console.log(arr['car'])            
-            console.log(data[5])
+            // console.log(arr)
+            // console.log(arr['car'])            
+            // console.log(arr.car)
+
             const result = data.reduce((accu, curr) => { 
-            accu[curr] = (accu[curr] || 0)+1; 
-            return accu;
+                accu[curr] = (accu[curr] || 0)+1; 
+                return accu;
             }, {});
+
+            // 위에꺼 풀어쓰면 밑에와같음
+            // let result = {}
+            // for(let i = 0; i<data.length; i++){
+            //     if (result[data[i]] === undefined || result[data[i]] === "" ){
+            //         result[data[i]] = 1
+            //     }
+            //     else{
+            //         result[data[i]]+=1
+            //     }
+            // }
 
             console.log(result);
         </script>
