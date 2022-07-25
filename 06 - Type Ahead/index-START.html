@@ -16,6 +16,51 @@
         <script>
             const endpoint =
                 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+            const search_form = document.querySelector('.search-form');
+            const search = document.querySelector('.search');
+            const suggestions = document.querySelector('.suggestions');
+
+            fetch(endpoint)
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {
+                    function searchEngine() {
+                        // for (let i = 0; i < suggestions.childElementCount; i++) {
+                        //     suggestions.removeChild(suggestions.firstChild);
+                        // }
+                        while (suggestions.hasChildNodes()) {
+                            suggestions.removeChild(suggestions.firstChild);
+                        }
+                        let inputVal = search.value;
+                        searchedArr = data
+                            .filter(
+                                items =>
+                                    items.city.toLowerCase().includes(inputVal.toLowerCase()) ||
+                                    items.state.toLowerCase().includes(inputVal.toLowerCase())
+                            )
+                            .map(items => {
+                                return {
+                                    city: items.city,
+                                    state: items.state,
+                                    population: items.population,
+                                };
+                            });
+
+                        searchedArr.forEach(element => {
+                            let tempLi = document.createElement('li');
+                            let tempSpan = document.createElement('span');
+                            tempSpan.classList.add('population');
+
+                            tempLi.innerHTML = `${element.city}, ${element.state}`;
+                            tempSpan.innerHTML = `${element.population}`;
+
+                            suggestions.appendChild(tempLi);
+                            tempLi.appendChild(tempSpan);
+                        });
+                    }
+                    search.addEventListener('input', searchEngine);
+                });
         </script>
     </body>
 </html>
