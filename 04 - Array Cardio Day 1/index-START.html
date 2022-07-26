@@ -70,7 +70,7 @@
                 'Beecher, Henry',
                 'Biondo, Frank',
             ];
-            console.log(people[0][0])
+            console.log(people[0][0]);
 
             // Array.prototype.filter()
             // 1. Filter the list of inventors for those who were born in the 1500's
@@ -94,35 +94,35 @@
             // Array.prototype.reduce()
             // 4. How many years did all the inventors live all together?
             const sum_lifeTime = birthdate_order.reduce((a, b) => {
-                return a + (b.passed- b.year);
-            },0);
+                return a + (b.passed - b.year);
+            }, 0);
             console.log(sum_lifeTime);
 
             // 5. Sort the inventors by years lived
-            const lifeTime_order = inventors.sort((a,b)=>{
-                return (b.passed-b.year) - (a.passed-a.year)
-            })
-            console.table(lifeTime_order)
+            const lifeTime_order = inventors.sort((a, b) => {
+                return b.passed - b.year - (a.passed - a.year);
+            });
+            console.table(lifeTime_order);
 
             // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
             // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
 
             // 7. sort Exercise
             // Sort the people alphabetically by last name
-            const tempMap = people.map((val,none,[])=>{
-                return {value:val}
-            })
-            console.table(tempMap)
-            const name_order = people.sort()
+            const tempMap = people.map((val, none, []) => {
+                return { value: val };
+            });
+            console.table(tempMap);
+            const name_order = people.sort();
             // const name_order = people.sort(function(a, b) {
             // const upperCaseA = a.toUpperCase();
             // const upperCaseB = b.toUpperCase();
-            
+
             // if(upperCaseA > upperCaseB) return 1;
             // if(upperCaseA < upperCaseB) return -1;
             // if(upperCaseA === upperCaseB) return 0;
             // })
-            console.log(name_order)
+            console.log(name_order);
 
             // 8. Reduce Exercise
             // Sum up the instances of each of these
@@ -143,14 +143,14 @@
                 'truck',
             ];
 
-            let arr = {}
-            arr['car'] = 1 // 'car' -> key, 1 -> value
+            let arr = {};
+            arr['car'] = 1; // 'car' -> key, 1 -> value
             // console.log(arr)
-            // console.log(arr['car'])            
+            // console.log(arr['car'])
             // console.log(arr.car)
 
-            const result = data.reduce((accu, curr) => { 
-                accu[curr] = (accu[curr] || 0)+1; 
+            const result = data.reduce((accu, curr) => {
+                accu[curr] = (accu[curr] || 0) + 1;
                 return accu;
             }, {});
 

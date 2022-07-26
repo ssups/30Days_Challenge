@@ -1,22 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Type Ahead 👀</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Type Ahead 👀</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <form class="search-form">
+            <input type="text" class="search" placeholder="City or State" />
+            <ul class="suggestions">
+                <li>Filter for a city</li>
+                <li>or a state</li>
+            </ul>
+        </form>
+        <script>
+            const endpoint =
+                "https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json";
+            const search_form = document.querySelector(".search-form");
+            const search = document.querySelector(".search");
+            const suggestions = document.querySelector(".suggestions");
 
-  <form class="search-form">
-    <input type="text" class="search" placeholder="City or State">
-    <ul class="suggestions">
-      <li>Filter for a city</li>
-      <li>or a state</li>
-    </ul>
-  </form>
-<script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+            fetch(endpoint)
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {
+                    function searchEngine() {
+                        while (suggestions.hasChildNodes()) {
+                            suggestions.removeChild(suggestions.firstChild);
+                        }
+                        let inputVal = search.value;
+                        searchedArr = data
+                            .filter(
+                                items =>
+                                    items.city.toLowerCase().includes(inputVal.toLowerCase()) ||
+                                    items.state.toLowerCase().includes(inputVal.toLowerCase())
+                            )
+                            .map(items => {
+                                return {
+                                    city: items.city,
+                                    state: items.state,
+                                    population: items.population.replace(
+                                        /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
+                                        ","
+                                    ),
+                                };
+                            });
 
-</script>
-</body>
+                        searchedArr.forEach(element => {
+                            let newInput = "";
+                            let tempLi = document.createElement("li");
+                            let tempSpan = document.createElement("span");
+                            let population = document.createElement("span");
+                            population.classList.add("population");
+
+                            let reg = new RegExp(inputVal, "gi");
+
+                            let newCity = element.city.replace(
+                                reg,
+                                `<span class='hl'>${inputVal}</span>`
+                            );
+                            let newState = element.state.replace(
+                                reg,
+                                `<span class='hl'>${inputVal}</span>`
+                            );
+                            tempSpan.innerHTML += newCity;
+                            tempSpan.innerHTML += ` ,${newState}`;
+                            population.innerHTML = `${element.population}`;
+
+                            suggestions.appendChild(tempLi);
+                            tempLi.appendChild(tempSpan);
+                            tempLi.appendChild(population);
+                        });
+                    }
+                    search.addEventListener("input", searchEngine);
+                });
+        </script>
+    </body>
 </html>
