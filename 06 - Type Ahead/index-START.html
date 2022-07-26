@@ -15,10 +15,10 @@
         </form>
         <script>
             const endpoint =
-                'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
-            const search_form = document.querySelector('.search-form');
-            const search = document.querySelector('.search');
-            const suggestions = document.querySelector('.suggestions');
+                "https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json";
+            const search_form = document.querySelector(".search-form");
+            const search = document.querySelector(".search");
+            const suggestions = document.querySelector(".suggestions");
 
             fetch(endpoint)
                 .then(response => {
@@ -26,11 +26,6 @@
                 })
                 .then(data => {
                     function searchEngine() {
-                        // console.log(data);
-                        console.log(data[0]);
-                        // for (let i = 0; i < suggestions.childElementCount; i++) {
-                        //     suggestions.removeChild(suggestions.firstChild);
-                        // }
                         while (suggestions.hasChildNodes()) {
                             suggestions.removeChild(suggestions.firstChild);
                         }
@@ -45,31 +40,40 @@
                                 return {
                                     city: items.city,
                                     state: items.state,
-                                    population: items.population,
+                                    population: items.population.replace(
+                                        /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
+                                        ","
+                                    ),
                                 };
                             });
 
                         searchedArr.forEach(element => {
-                            let tempLi = document.createElement('li');
-                            let tempSpan = document.createElement('span');
-                            tempSpan.classList.add('population');
+                            let newInput = "";
+                            let tempLi = document.createElement("li");
+                            let tempSpan = document.createElement("span");
+                            let population = document.createElement("span");
+                            population.classList.add("population");
 
-                            // let temp = new RegExp(inputVal, 'gi');
-                            // let hahaha = element.city.replace(
-                            //     temp,
-                            //     `<span class='hl'>${inputVal}</span>`
-                            // );
-                            // console.log(hahaha);
-                            // tempLi.innerHTML = `${hahaha}, ${element.state}`;
+                            let reg = new RegExp(inputVal, "gi");
 
-                            tempLi.innerHTML = `${element.city}, ${element.state}`;
-                            tempSpan.innerHTML = `${element.population}`;
+                            let newCity = element.city.replace(
+                                reg,
+                                `<span class='hl'>${inputVal}</span>`
+                            );
+                            let newState = element.state.replace(
+                                reg,
+                                `<span class='hl'>${inputVal}</span>`
+                            );
+                            tempSpan.innerHTML += newCity;
+                            tempSpan.innerHTML += ` ,${newState}`;
+                            population.innerHTML = `${element.population}`;
 
                             suggestions.appendChild(tempLi);
                             tempLi.appendChild(tempSpan);
+                            tempLi.appendChild(population);
                         });
                     }
-                    search.addEventListener('input', searchEngine);
+                    search.addEventListener("input", searchEngine);
                 });
         </script>
     </body>
