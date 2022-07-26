@@ -128,8 +128,8 @@
   <script>
     const panelsArr = document.querySelectorAll('.panel')
     
-    panelsArr.forEach(items => items.addEventListener('click',(e)=>{
-        let tempClassLi = e.target.classList
+    panelsArr.forEach(el => el.addEventListener('click',()=>{
+        let tempClassLi = el.classList
         if(! tempClassLi.contains('open')){
           tempClassLi.add('open')
         }
