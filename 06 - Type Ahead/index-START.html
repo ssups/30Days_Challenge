@@ -26,6 +26,8 @@
                 })
                 .then(data => {
                     function searchEngine() {
+                        // console.log(data);
+                        console.log(data[0]);
                         // for (let i = 0; i < suggestions.childElementCount; i++) {
                         //     suggestions.removeChild(suggestions.firstChild);
                         // }
@@ -51,6 +53,14 @@
                             let tempLi = document.createElement('li');
                             let tempSpan = document.createElement('span');
                             tempSpan.classList.add('population');
+
+                            // let temp = new RegExp(inputVal, 'gi');
+                            // let hahaha = element.city.replace(
+                            //     temp,
+                            //     `<span class='hl'>${inputVal}</span>`
+                            // );
+                            // console.log(hahaha);
+                            // tempLi.innerHTML = `${hahaha}, ${element.state}`;
 
                             tempLi.innerHTML = `${element.city}, ${element.state}`;
                             tempSpan.innerHTML = `${element.population}`;
