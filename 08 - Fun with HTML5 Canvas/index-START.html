@@ -1,19 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>HTML5 Canvas</title>
-</head>
-<body>
-<canvas id="draw" width="800" height="800"></canvas>
-<script>
-</script>
+    <head>
+        <meta charset="UTF-8" />
+        <title>HTML5 Canvas</title>
+    </head>
+    <style>
+        canvas {
+            width: 1600px;
+            height: 1600px;
+        }
+    </style>
+    <body>
+        <canvas class="canvas" width="1600" height="1600"></canvas>
+        <script>
+            const canvas = document.querySelector(".canvas");
+            const context = canvas.getContext("2d");
+            const maxRadius = 60;
+            // const minRadius;
+            let start;
+            let currentRadius = maxRadius;
+            let radiousCount = 0;
+            let colorCount = 0;
+            let redCount = 255;
+            let greenCount = 0;
+            let blueCount = 0;
+            // let minRadius = 60;
+            let mousePos = { x: 0, y: 0 };
+            let preMousePos = { x: undefined, y: undefined };
+            let preRadious = currentRadius;
 
-<style>
-  html, body {
-    margin: 0;
-  }
-</style>
+            function radian(d) {
+                return (d / 180) * Math.PI;
+            }
+            function draw(prePosX, prePosY, preR) {
+                if (colorCount / 255 <= 1) {
+                    redCount--;
+                    greenCount++;
+                } else if (colorCount / 255 > 1 && colorCount / 255 <= 2) {
+                    greenCount--;
+                } else if (colorCount / 255 > 2) {
+                    blueCount--;
+                }
+                // console.log(redCount);
+                context.fillStyle = `rgb(${redCount},${greenCount},${blueCount})`;
+                // context.fillStyle = `rgb(${255},${0},${0})`;
+                // context.fillRect(prePosX, prePosY - currentRadius, Math.abs(mousePos.x - prePosX), Math.abs(mousePos.y - prePosY));
 
-</body>
+                if (radiousCount / 110 < 1) {
+                    currentRadius -= 0.5;
+                } else {
+                    currentRadius += 0.5;
+                }
+                if (radiousCount >= 220) {
+                    radiousCount = 0;
+                }
+
+                radiousCount++;
+                colorCount++;
+                if (!start) {
+                    return;
+                }
+
+                context.beginPath();
+                context.arc(mousePos.x, mousePos.y, currentRadius, 0, radian(360), false);
+                context.fill();
+                context.closePath();
+
+                // context.beginPath();
+                // context.moveTo(mousePos.x, mousePos.y + currentRadius);
+                // context.lineTo(prePosX, prePosY + preR);
+                // context.lineTo(prePosX, prePosY - preR);
+                // context.lineTo(mousePos.x, mousePos.y - currentRadius);
+                // context.fill();
+                // context.closePath();
+
+                preMousePos["x"] = mousePos.x;
+                preMousePos["y"] = mousePos.y;
+                preRadious = currentRadius;
+
+                return preMousePos;
+                return currentRadius;
+                // requestAnimationFrame(draw);
+            }
+
+            canvas.onmousedown = () => {
+                start = true;
+            };
+            canvas.onmousemove = e => {
+                if (!start) {
+                    return;
+                }
+                // console.log(e);
+                mousePos.x = e.offsetX;
+                mousePos.y = e.offsetY;
+                // console.log(preMousePos.x);
+                let paramX = preMousePos.x || mousePos.x;
+                let paramY = preMousePos.y || mousePos.y;
+
+                draw(paramX, paramY, preRadious);
+                // draw(preMousePos.x, preMousePos.y);
+            };
+            window.onmouseup = () => {
+                start = false;
+                preMousePos = { x: undefined, y: undefined };
+            };
+        </script>
+
+        <style>
+            html,
+            body {
+                margin: 0;
+            }
+        </style>
+    </body>
 </html>
