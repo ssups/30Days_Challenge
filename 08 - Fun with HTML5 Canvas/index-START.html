@@ -15,72 +15,117 @@
         <script>
             const canvas = document.querySelector(".canvas");
             const context = canvas.getContext("2d");
-            const maxRadius = 60;
-            // const minRadius;
+            const maxSize = 100;
+            const minSize = 5;
+            const speed = 2;
+            let currentSize = maxSize;
+            let changer = -speed;
             let start;
-            let currentRadius = maxRadius;
-            let radiousCount = 0;
             let colorCount = 0;
-            let redCount = 255;
-            let greenCount = 0;
-            let blueCount = 0;
-            // let minRadius = 60;
+            let colorSpeed = 5;
+            let redVal = 255;
+            let greenVal = 0;
+            let blueVal = 0;
             let mousePos = { x: 0, y: 0 };
             let preMousePos = { x: undefined, y: undefined };
-            let preRadious = currentRadius;
 
-            function radian(d) {
-                return (d / 180) * Math.PI;
+            function plusColorVal(colorName, colorSpeed) {
+                switch (colorName) {
+                    case "red":
+                        redVal += colorSpeed;
+                        break;
+                    case "green":
+                        greenVal += colorSpeed;
+                        break;
+                    case "blue":
+                        blueVal += colorSpeed;
+                        break;
+                }
             }
-            function draw(prePosX, prePosY, preR) {
-                if (colorCount / 255 <= 1) {
-                    redCount--;
-                    greenCount++;
-                } else if (colorCount / 255 > 1 && colorCount / 255 <= 2) {
-                    greenCount--;
-                } else if (colorCount / 255 > 2) {
-                    blueCount--;
+            function minusColorVal(colorName, colorSpeed) {
+                switch (colorName) {
+                    case "red":
+                        redVal -= colorSpeed;
+                        break;
+                    case "green":
+                        greenVal -= colorSpeed;
+                        break;
+                    case "blue":
+                        blueVal -= colorSpeed;
+                        break;
                 }
-                // console.log(redCount);
-                context.fillStyle = `rgb(${redCount},${greenCount},${blueCount})`;
-                // context.fillStyle = `rgb(${255},${0},${0})`;
-                // context.fillRect(prePosX, prePosY - currentRadius, Math.abs(mousePos.x - prePosX), Math.abs(mousePos.y - prePosY));
+            }
 
-                if (radiousCount / 110 < 1) {
-                    currentRadius -= 0.5;
-                } else {
-                    currentRadius += 0.5;
-                }
-                if (radiousCount >= 220) {
-                    radiousCount = 0;
-                }
-
-                radiousCount++;
-                colorCount++;
+            function draw(prePosX, prePosY) {
                 if (!start) {
                     return;
                 }
 
+                // 255,0,0
+                // 255,128,0
+                // 255,255,0
+                // 128,255,0 (잠시생략)
+                // 0,128,0
+                // 0,128,128 ??
+                // 0,0,128
+                // 0,0,255
+                // 128,0,128
+                // 255,0,0
+
+                if (colorCount / 50 <= 1) {
+                    plusColorVal("green", colorSpeed); // 255,255,0
+                } else if (colorCount / 50 > 1 && colorCount / 50 <= 1.5) {
+                    minusColorVal("red", colorSpeed);
+                    // 128,255,0
+                } else if (colorCount / 50 > 1.5 && colorCount / 50 <= 2) {
+                    minusColorVal("red", colorSpeed);
+                    minusColorVal("green", colorSpeed);
+                    // 0,128,0
+                } else if (colorCount / 50 > 2 && colorCount / 50 <= 2.5) {
+                    plusColorVal("blue", colorSpeed);
+                    // 0,128,128
+                } else if (colorCount / 50 > 2.5 && colorCount / 50 <= 3) {
+                    minusColorVal("green", colorSpeed);
+                    // 0,0,128
+                } else if (colorCount / 50 > 3 && colorCount / 50 <= 3.5) {
+                    plusColorVal("blue", colorSpeed);
+                    // 0,0,255
+                } else if (colorCount / 50 > 3.5 && colorCount / 50 <= 4) {
+                    minusColorVal("blue", colorSpeed);
+                    plusColorVal("red", colorSpeed);
+                    //128,0,128
+                } else if (colorCount / 50 > 4 && colorCount / 50 <= 4.5) {
+                    minusColorVal("blue", colorSpeed);
+                    //128,0,0
+                } else if (colorCount / 50 > 4.5 && colorCount / 50 <= 5) {
+                    plusColorVal("red", colorSpeed);
+                    //255,0,0
+                } else if (colorCount / 50 > 5) {
+                    colorCount = 0;
+                }
+
+                colorCount++;
+
+                console.log(colorCount / 50);
+
+                currentSize += changer;
+                if (currentSize <= minSize) {
+                    changer = speed;
+                } else if (currentSize >= maxSize) {
+                    changer = -speed;
+                }
+
                 context.beginPath();
-                context.arc(mousePos.x, mousePos.y, currentRadius, 0, radian(360), false);
-                context.fill();
-                context.closePath();
+                context.moveTo(prePosX, prePosY);
+                context.lineWidth = currentSize;
+                context.lineCap = "round";
+                context.lineTo(mousePos.x, mousePos.y);
+                context.strokeStyle = `rgb(${redVal},${greenVal},${blueVal})`;
+                context.stroke();
 
-                // context.beginPath();
-                // context.moveTo(mousePos.x, mousePos.y + currentRadius);
-                // context.lineTo(prePosX, prePosY + preR);
-                // context.lineTo(prePosX, prePosY - preR);
-                // context.lineTo(mousePos.x, mousePos.y - currentRadius);
-                // context.fill();
-                // context.closePath();
-
-                preMousePos["x"] = mousePos.x;
-                preMousePos["y"] = mousePos.y;
-                preRadious = currentRadius;
+                preMousePos = { x: mousePos.x, y: mousePos.y };
 
                 return preMousePos;
-                return currentRadius;
-                // requestAnimationFrame(draw);
             }
 
             canvas.onmousedown = () => {
@@ -90,15 +135,11 @@
                 if (!start) {
                     return;
                 }
-                // console.log(e);
-                mousePos.x = e.offsetX;
-                mousePos.y = e.offsetY;
-                // console.log(preMousePos.x);
-                let paramX = preMousePos.x || mousePos.x;
-                let paramY = preMousePos.y || mousePos.y;
+                mousePos = { x: e.offsetX, y: e.offsetY };
+                let prePosX = preMousePos.x || mousePos.x;
+                let prePosY = preMousePos.y || mousePos.y;
 
-                draw(paramX, paramY, preRadious);
-                // draw(preMousePos.x, preMousePos.y);
+                draw(prePosX, prePosY);
             };
             window.onmouseup = () => {
                 start = false;
@@ -110,6 +151,23 @@
             html,
             body {
                 margin: 0;
+                /* color: orange;
+                color: yellow;
+                color: green;
+                color: blue;
+                color: purple;
+                color: red; */
+
+                /* 
+                255,0,0
+                255,165,0
+                255,255,0
+                0,128,0
+                0,0,255
+                128,0,128
+                255,0,0
+                
+                 */
             }
         </style>
     </body>

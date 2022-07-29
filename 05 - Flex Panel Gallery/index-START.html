@@ -3,18 +3,14 @@
     <head>
         <meta charset="UTF-8" />
         <title>Flex Panels 💪</title>
-        <link
-            href="https://fonts.googleapis.com/css?family=Amatic+SC"
-            rel="stylesheet"
-            type="text/css"
-        />
+        <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet" type="text/css" />
     </head>
     <body>
         <style>
             html {
                 box-sizing: border-box;
                 background: #ffc600;
-                font-family: 'helvetica neue';
+                font-family: "helvetica neue";
                 font-size: 20px;
                 font-weight: 200;
             }
@@ -43,8 +39,7 @@
                 align-items: center;
                 /* Safari transitionend event.propertyName === flex */
                 /* Chrome + FF transitionend event.propertyName === flex-grow */
-                transition: font-size 0.7s cubic-bezier(0.61, -0.19, 0.7, -0.11),
-                    flex 0.7s cubic-bezier(0.61, -0.19, 0.7, -0.11), background 0.2s;
+                transition: font-size 0.7s cubic-bezier(0.61, -0.19, 0.7, -0.11), flex 0.7s cubic-bezier(0.61, -0.19, 0.7, -0.11), background 0.2s;
                 font-size: 20px;
                 background-size: cover;
                 background-position: center;
@@ -81,7 +76,7 @@
 
             .panel p {
                 text-transform: uppercase;
-                font-family: 'Amatic SC', cursive;
+                font-family: "Amatic SC", cursive;
                 text-shadow: 0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
                 font-size: 2em;
             }
@@ -137,12 +132,12 @@
         </div>
 
         <script>
-            const panelsArr = document.querySelectorAll('.panel');
+            const panelsArr = document.querySelectorAll(".panel");
 
             panelsArr.forEach(
                 items =>
                     (items.onclick = function () {
-                        this.classList.toggle('open');
+                        this.classList.toggle("open");
                     })
             );
 
@@ -151,7 +146,7 @@
             //         console.log(thi s);
             //         let tempClassLi = this.classList;
             //         if (!tempClassLi.contains('open')) {
-            //             tempClassLi.add('open');
+            //             tempClassLi.add('open');e
             //         } else {
             //             tempClassLi.remove('open');
             //         }
