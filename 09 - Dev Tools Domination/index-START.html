@@ -1,46 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Console Tricks!</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Console Tricks!</title>
+    </head>
+    <body>
+        <p onClick="makeGreen()">×BREAK×DOWN×</p>
 
-  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+        <script>
+            const dogs = [
+                { name: "Snickers", age: 2 },
+                { name: "hugo", age: 8 },
+            ];
+            const [Snickers, Hugo] = dogs;
+            function makeGreen() {
+                const p = document.querySelector("p");
+                p.style.color = "#BADA55";
+                p.style.fontSize = "50px";
+            }
 
-  <script>
-    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+            // Regular
+            console.log("%c hello", "font-size: 3em; color: red; border: 2px solid white; background-color:skyblue;");
+            console.log("콘솔 삭제됨");
+            // Interpolated
 
-    function makeGreen() {
-      const p = document.querySelector('p');
-      p.style.color = '#BADA55';
-      p.style.fontSize = '50px';
-    }
+            // Styled
 
-    // Regular
+            // warning!
 
-    // Interpolated
+            // Error :|
 
-    // Styled
+            // Info
+            console.info(Snickers.name);
+            console.log(Snickers.name);
+            console.info();
 
-    // warning!
+            // Testing
 
-    // Error :|
+            // clearing
 
-    // Info
+            // Viewing DOM Elements
 
-    // Testing
+            // Grouping together
 
-    // clearing
+            // counting
 
-    // Viewing DOM Elements
-
-    // Grouping together
-
-    // counting
-
-    // timing
-
-  </script>
-</body>
+            // timing
+        </script>
+    </body>
 </html>
