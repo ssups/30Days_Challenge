@@ -1,12 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Key Detection</title>
-  <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
-</head>
-<body>
-<script>
-</script>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Key Detection</title>
+        <script
+            type="text/javascript"
+            src="https://www.cornify.com/js/cornify.js"
+        ></script>
+    </head>
+    <body>
+        <script>
+            let keys = new Array();
+            function printKey(e) {
+                let onlyKey = e.key;
+                keys.push(onlyKey);
+                if (keys.length > 6) {
+                    keys.splice(0, 1);
+                    // keys.shift() 배열의 첫번째 요소 제거
+                    // keys.pop() 배열의 마지막 요소 제거
+                }
+                console.log(keys);
+                // console.log(keys.at(-1)); // 배열의 마지막 요소 선택
+            }
+            window.addEventListener("keyup", printKey);
+        </script>
+    </body>
 </html>
