@@ -252,6 +252,7 @@
 
         <script>
             const images = document.querySelectorAll("img");
+            const isActive = el.classList.contains("active");
 
             function debounce(func, wait = 20, immediate = true) {
                 var timeout;
@@ -279,7 +280,6 @@
 
             function activate() {
                 images.forEach(el => {
-                    let isActive = el.classList.contains("active");
                     if (isActive) {
                         if (
                             window.scrollY > el.offsetTop + el.height ||
