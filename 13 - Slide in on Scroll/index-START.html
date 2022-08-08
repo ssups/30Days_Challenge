@@ -251,8 +251,7 @@
         </div>
 
         <script>
-            const images = document.querySelectorAll("img");
-            const isActive = el.classList.contains("active");
+            const images = document.querySelectorAll(".slide-in");
 
             function debounce(func, wait = 20, immediate = true) {
                 var timeout;
@@ -270,16 +269,17 @@
                 };
             }
 
-            window.onscroll = () => {
-                // console.log(images[2].scrollHeight);
-                // console.log(images[2].clientHeight);
-                // console.log(images[2].offsetTop);
-                // debounce(activate());
-                debounce(activate(), 20, true);
-            };
+            // window.onscroll = () => {
+            //     // console.log(images[2].scrollHeight);
+            //     // console.log(images[2].clientHeight);
+            //     // console.log(images[2].offsetTop);
+            //     // debounce(activate());
+            // };
+            window.addEventListener("scroll", activate);
 
             function activate() {
                 images.forEach(el => {
+                    const isActive = el.classList.contains("active");
                     if (isActive) {
                         if (
                             window.scrollY > el.offsetTop + el.height ||
