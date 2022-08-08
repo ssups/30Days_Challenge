@@ -62,33 +62,61 @@
             const itemsList = document.querySelector(".plates");
             const text = addItems.querySelector('input[type="text"]');
             const submitBtn = addItems.querySelector('input[type="submit"]');
+            // const itemsCheckboxs = itemsList.querySelectorAll('input')
             const items = [];
+
             window.onload = () => {
-                for (let i = 0; i < localStorage.length; i++) {
-                    itemsList.innerHTML += `<li><input type="checkbox" id="${i}"/>
-                    <label for="${i}">${localStorage.getItem(`${i}`)}</label>
+                for (let i = 0; i < localStorage.length / 2; i++) {
+                    itemsList.innerHTML += `<li><input type="checkbox" id="item${i}"/>
+                    <label for="item${i}">${window.localStorage.getItem(
+                        `index${i}`
+                    )}</label>
                     </li>`;
                 }
+                const tempArr = itemsList.querySelectorAll("li");
+                tempArr.forEach(el => {
+                    let key = el.querySelector("label").innerText;
+                    if (window.localStorage.getItem(key) === "true") {
+                        el.querySelector("input").setAttribute("checked", "");
+                    }
+                });
             };
 
             function addList() {
                 if (!text.value) {
                     return;
                 }
-                items.push(text.value);
-                let temp;
-                window.localStorage.setItem(localStorage.length, text.value);
                 itemsList.innerHTML += `
-                  <li>
-                    <input type="checkbox" id="${localStorage.length}"/>
-                    <label for="${localStorage.length}">${
-                    items[items.length - 1]
-                }</label>
-                    
+                <li>
+                  
+                  <input type="checkbox" id="item${localStorage.length / 2}"/>
+                  <label for="item${localStorage.length / 2}">${text.value}
+                  </label>
+
                   </li>`;
+                window.localStorage.setItem(
+                    `index${localStorage.length / 2}`,
+                    text.value
+                );
+                window.localStorage.setItem(text.value, false);
                 text.value = null;
             }
+
+            function certifyBox(e) {
+                let isChecked = e.target.checked;
+                let checkedText =
+                    e.target.parentNode.querySelector("label").innerText;
+                if (isChecked) {
+                    e.target.setAttribute("checked", "");
+                    window.localStorage.setItem(checkedText, true);
+                } else if (!isChecked) {
+                    e.target.removeAttribute("checked");
+                    window.localStorage.setItem(checkedText, false);
+                }
+            }
+
             submitBtn.addEventListener("click", addList);
+            itemsList.addEventListener("input", certifyBox);
         </script>
     </body>
 </html>
