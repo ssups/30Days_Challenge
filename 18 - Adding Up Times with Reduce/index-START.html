@@ -66,6 +66,7 @@
             <li data-time="4:04">Video 58</li>
         </ul>
         <script>
+            console.time("hi");
             const videos = document.querySelectorAll(".videos li");
             const minutes = [];
             const seconds = [];
@@ -84,6 +85,7 @@
             let finalSecond = Math.floor((secondifiedTimeSum % 60) % 60);
 
             console.log(finalHour, finalMinute, finalSecond);
+            console.timeEnd("hi");
         </script>
     </body>
 </html>
