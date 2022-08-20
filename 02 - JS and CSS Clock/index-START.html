@@ -10,14 +10,16 @@
                 <div class="hand hour-hand"></div>
                 <div class="hand min-hand"></div>
                 <div class="hand second-hand"></div>
+                <div class="handHolder"></div>
             </div>
         </div>
 
         <style>
             html {
-                background: #018ded url(https://unsplash.it/1500/1000?image=881&blur=5);
+                background: #018ded
+                    url(https://unsplash.it/1500/1000?image=881&blur=5);
                 background-size: cover;
-                font-family: 'helvetica neue';
+                font-family: "helvetica neue";
                 text-align: center;
                 font-size: 10px;
             }
@@ -39,15 +41,18 @@
                 margin: 50px auto;
                 position: relative;
                 padding: 2rem;
-                box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1), inset 0 0 0 3px #efefef,
-                    inset 0 0 10px black, 0 0 10px rgba(0, 0, 0, 0.2);
+                box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1),
+                    inset 0 0 0 3px #efefef, inset 0 0 10px black,
+                    0 0 10px rgba(0, 0, 0, 0.2);
             }
 
             .clock-face {
                 position: relative;
                 width: 100%;
                 height: 100%;
-                transform: translateY(-3px); /* account for the height of the clock hands */
+                transform: translateY(
+                    -3px
+                ); /* account for the height of the clock hands */
             }
 
             .hand {
@@ -57,6 +62,18 @@
                 right: 50%;
                 top: 50%;
                 transform-origin: 100%;
+                transform: translate(50%, -50%);
+            }
+            .handHolder {
+                background-color: tomato;
+                opacity: 0.7;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                border-radius: 10px;
+                position: absolute;
+                width: 15px;
+                height: 15px;
             }
             .hour-hand {
                 width: 30%;
@@ -65,15 +82,18 @@
                 width: 50%;
             }
             .second-hand {
-                width: 50%;
+                transform-origin: 83%;
+                right: 40%;
+                background-color: tomato;
+                width: 60%;
                 height: 2px;
             }
         </style>
 
         <script>
-            const hour_hand = document.querySelector('.hour-hand');
-            const min_hand = document.querySelector('.min-hand');
-            const second_hand = document.querySelector('.second-hand');
+            const hour_hand = document.querySelector(".hour-hand");
+            const min_hand = document.querySelector(".min-hand");
+            const second_hand = document.querySelector(".second-hand");
             const defaultDegree = 90;
 
             setInterval(() => {
@@ -85,7 +105,8 @@
 
                 let degForHour = defaultDegree + (360 / 12) * hours;
                 let degForMinute = defaultDegree + (360 / 60) * minutes;
-                let degForSecond = defaultDegree + (360 / 60) * seconds + (6 / 1000) * miliSec;
+                let degForSecond =
+                    defaultDegree + (360 / 60) * seconds + (6 / 1000) * miliSec;
 
                 hour_hand.style.transform = `rotate(${degForHour}deg)`;
                 min_hand.style.transform = `rotate(${degForMinute}deg)`;
