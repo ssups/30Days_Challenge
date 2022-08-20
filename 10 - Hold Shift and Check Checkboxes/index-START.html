@@ -99,12 +99,12 @@
             let lastCheckedBoxIndex = checkBox.length;
             let isShiftDown;
             window.onkeydown = e => {
-                if (e.code === "ShiftLeft" || e.code === "ShiftRight") {
+                if (e.key === "Shift") {
                     isShiftDown = true;
                 }
             };
             window.onkeyup = e => {
-                if (e.code === "ShiftLeft" || e.code === "ShiftRight") {
+                if (e.key === "Shift") {
                     isShiftDown = false;
                 }
             };

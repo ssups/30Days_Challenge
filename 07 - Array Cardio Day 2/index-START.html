@@ -29,11 +29,11 @@
             // Array.prototype.every() // is everyone 19 or older?
 
             const currentYear = new Date().getFullYear();
-            const adult = birthYear => currentYear - birthYear >= 19;
+            const checkAdult = birthYear => currentYear - birthYear >= 19;
             const isAdult = {};
             const allAdult = {};
-            isAdult["isAdult"] = people.some(el => adult(el.year));
-            allAdult["allAdult"] = people.every(el => adult(el.year));
+            isAdult["isAdult"] = people.some(el => checkAdult(el.year));
+            allAdult["allAdult"] = people.every(el => checkAdult(el.year));
 
             console.log(isAdult);
             console.log(allAdult);
